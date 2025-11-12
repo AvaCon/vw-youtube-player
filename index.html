@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SL YouTube Player</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* This CSS ensures the video fills the entire prim face */
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Hides scrollbars */
+            height: 100%;
+            width: 100%;
+            background-color: #000; /* Black background by default */
+        }
+        iframe, div {
+            height: 100%;
+            width: 100%;
+            border: none; /* No border on the video player */
+        }
+        /* Style for the "waiting" message */
+        div#waiting {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Arial, sans-serif;
+            color: #FFF;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="player-container">
+        <div id="waiting">
+            <h2>Waiting for Second Life...</h2>
+            <p>Please set a video ID in the object's description field.</p>
+        </div>
+    </div>
+
+    <script>
+        // This JavaScript runs as soon as the page loads
+        (function() {
+            // 1. Get the URL parameters
+            const params = new URLSearchParams(window.location.search);
+            const videoId = params.get('video'); // Looks for '?video=...'
+
+            // 2. Find the container to put the player in
+            const container = document.getElementById('player-container');
+
+            if (videoId) {
+                // 3. If a video ID was found, build the YouTube URL
+                // We add 'autoplay=1' to make it play automatically
+                // We add 'rel=0' to stop related videos from showing at the end
+                const videoUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+
+                // 4. Create the iframe element
+                const iframe = document.createElement('iframe');
+                iframe.setAttribute('src', videoUrl);
+                iframe.setAttribute('frameborder', '0');
+                iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+                iframe.setAttribute('allowfullscreen', 'true');
+
+                // 5. Clear the "waiting" message and insert the video player
+                container.innerHTML = ''; // Clear the div
+                container.appendChild(iframe); // Add the iframe
+            }
+            // 6. If no video ID was found, the "waiting" message remains visible.
+        })();
+    </script>
+
+</body>
+</html>
