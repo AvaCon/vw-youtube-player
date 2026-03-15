@@ -54,7 +54,7 @@
                 // 3. If a video ID was found, build the YouTube URL
                 // We add 'autoplay=1' to make it play automatically
                 // We add 'rel=0' to stop related videos from showing at the end
-                const videoUrl = `https://www.youtube.com/embed/${videoId}?rel=0`;
+                const videoUrl = `https://www.youtube.com/embed/${videoId}?autoplay=${autoplay}rel=0`;
 
                 // 4. Create the iframe element
                 const iframe = document.createElement('iframe');
